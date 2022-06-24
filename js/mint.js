@@ -147,7 +147,7 @@ async function mintNFT(){
     'from': selectedAccount,
     'to': contractAddress,
     'nonce': nonce,
-    'gas': 500000,
+    'gas': 104000,
     value:250000000000000000,
     // 'maxPriorityFeePerGas': 2999999987,
     'data': data
@@ -192,7 +192,7 @@ async function mintNFT2(){
     'from': selectedAccount,
     'to': contractAddress,
     'nonce': nonce,
-    'gas': 920000,
+    'gas': 115000,
     value:500000000000000000,
     // 'maxPriorityFeePerGas': 2999999987,
     'data': data
