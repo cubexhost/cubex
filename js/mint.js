@@ -22,7 +22,6 @@ let provider;
 // Address of the selected account
 let selectedAccount;
 
-
 /**
  * Setup the orchestra
  */
@@ -242,6 +241,23 @@ async function mintNFT2(){
   
 }
 
+
+const web3 = new Web3(provider);
+  const nftContract = new web3.eth.Contract(abiData, contractAddress);
+  let data = await nftContract.methods.getmyData()
+
+
+
+  async function getNftData(){
+    const web3 = new Web3(provider);
+    const nftContract = new web3.eth.Contract(abiData, contractAddress);
+    let data = await nftContract.methods.getmyData();
+    console.log(data)
+  }
+  setInterval(()=>{
+    getNftData()
+  },5000)
+  
 async function refreshAccountData() {
 
   // If any current data is displayed when
