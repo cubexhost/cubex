@@ -37,7 +37,11 @@ Webflow.push(function() { $('html').addClass('webflow-loaded') });
 .new-row-span {
   display: block;
 }
-
+.non-whitelist {
+  display: none;
+  color: white;
+  font-size: 130%;
+}
 .btn-not-live {
   background-color: #fa8d8d;
   color: #fff;
@@ -138,6 +142,12 @@ padding-bottom: 18px;
   }
 }
 @media screen and (max-width: 768px) {
+  .non-whitelist {
+    display: none;
+    color: white;
+    font-size: 100%;
+    padding: 0 20px;
+  }
   .btn-not-live {
     max-width: 300px;
     margin: 0 auto;
@@ -965,6 +975,9 @@ padding-bottom: 18px;
                 <strong>Connected blockchain:</strong> <span id="network-name"></span>
               </p>
 
+              <p class="non-whitelist">
+                Your address is not whitelisted. Please wait for the public sale.
+              </p>
               <p class="space-top-account">
                 <strong>Account:</strong> <span id="selected-account"></span>
               </p>

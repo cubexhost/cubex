@@ -130,7 +130,15 @@ async function mintNFT(){
 // console.log(abiData)
   const nftContract = new web3.eth.Contract(abiData, contractAddress);
   
+  const _whiteListed = await nftContract.methods.whitelist(selectedAccount).call();
   
+  if(!_whiteListed){
+
+    $(".non-whitelist").fadeIn();
+
+    console.log("User is not white listed.");
+    return;
+  }
   
   const data = await nftContract.methods.payWhitelist(1).encodeABI();
   console.log('data',nftContract.methods)
@@ -166,9 +174,17 @@ async function mintNFT2(){
   // console.log('provider', nonce)
 // console.log(abiData)
   const nftContract = new web3.eth.Contract(abiData, contractAddress);
+    
+  const _whiteListed = await nftContract.methods.whitelist(selectedAccount).call();
   
-  
-  
+  if(!_whiteListed){
+
+    $(".non-whitelist").fadeIn();
+
+    console.log("User is not white listed.");
+    return;
+  }
+
   const data = await nftContract.methods.payWhitelist(2).encodeABI();
   console.log('data',nftContract.methods)
   
