@@ -193,15 +193,16 @@ async function mintNFT2(){
   
 }
 
-// async function getNftData(){
-//   const web3 = new Web3(provider);
-//   const nftContract = new web3.eth.Contract(abiData, contractAddress);
-//   let data = await nftContract.methods.amountMinted().call();
-//   console.log(data)
-// }
-// setInterval(()=>{
-//   getNftData()
-// },5000)
+async function getNftData(){
+  const web3 = new Web3(provider);
+  const nftContract = new web3.eth.Contract(abiData, contractAddress);
+  let data = await nftContract.methods.amountMinted().call();
+  console.log(data)
+  $("#mintedCounter").html(data)
+}
+setInterval(()=>{
+  getNftData()
+},5000)
 
 async function refreshAccountData() {
 
