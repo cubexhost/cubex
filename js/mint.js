@@ -168,40 +168,66 @@ async function mintNFT(){
   
 }
 
+async function mintNFT(){
+  // const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest'); //get latest nonce
+// alert(nonce);
+
+  const web3 = new Web3(provider);
+  
+  const nonce = await web3.eth.getTransactionCount(selectedAccount,'latest')
+  // console.log('provider', nonce)
+// console.log(abiData)
+  const nftContract = new web3.eth.Contract(abiData, contractAddress);
+  
+  
+  
+  const data = await nftContract.methods.payWhitelist(1).encodeABI();
+  console.log('data',nftContract.methods)
+  
+  const tx = {
+    'from': selectedAccount,
+    'to': contractAddress,
+    'nonce': nonce,
+    'gas': 500000,
+    value:250000000000000000,
+    // 'maxPriorityFeePerGas': 2999999987,
+    'data': data
+  };
+  try{
+    let txR= await web3.eth.sendTransaction(tx);
+    console.log(txR);
+  
+  }
+  catch(err)
+  {
+    console.log('err',err)
+  }
+  
+}
+
 async function mintNFT2(){
   // const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest'); //get latest nonce
 // alert(nonce);
 
   const web3 = new Web3(provider);
+  
   const nonce = await web3.eth.getTransactionCount(selectedAccount,'latest')
   // console.log('provider', nonce)
+// console.log(abiData)
   const nftContract = new web3.eth.Contract(abiData, contractAddress);
   
-  const data = await nftContract.methods.payWhitelist(1).encodeABI();
-
   
-  setTimeout(function() {
-    $(".mint-information").animate({
-      opacity: 0,
-    }, 600, function() {
-      // Animation complete.
-      // $(".mint-information").html("<div class='btn-success-mint'>You successfully claimed a CubeX NFT.</div>");
-    });    
-    $(".mint-information").animate({
-      opacity: 1,
-    }, 600, function() {
-      $("#voucherLeft").html("0")
-      // Animation complete.
-    });
-  }, 12000);
+  
+  const data = await nftContract.methods.payWhitelist(2).encodeABI();
+  console.log('data',nftContract.methods)
   
   const tx = {
     'from': selectedAccount,
     'to': contractAddress,
     'nonce': nonce,
     'gas': 720000,
+    value:500000000000000000,
     // 'maxPriorityFeePerGas': 2999999987,
-    'value': 250000000,
     'data': data
   };
   try{
