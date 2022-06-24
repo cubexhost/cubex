@@ -33,19 +33,7 @@ function init() {
   console.log("Fortmatic is", Fortmatic);
   console.log("window.web3 is", window.web3, "window.ethereum is", window.ethereum);
 
-  // Check that the web page is run in a secure context,
-  // as otherwise MetaMask won't be available
-  // if(location.protocol !== 'https:') {
-  //   // https://ethereum.stackexchange.com/a/62217/620
-  //   const alert = document.querySelector("#alert-error-https");
-  //   alert.style.display = "block";
-  //   document.querySelector("#btn-connect").setAttribute("disabled", "disabled")
-  //   return;
-  // }
 
-  // Tell Web3modal what providers we have available.
-  // Built-in web browser provider (only one can exist as a time)
-  // like MetaMask, Brave or Opera is added automatically by Web3modal
   const providerOptions = {
     walletconnect: {
       package: WalletConnectProvider,
@@ -141,7 +129,7 @@ async function mintNFT(){
   // console.log('provider', nonce)
   const nftContract = new web3.eth.Contract(abiData, contractAddress);
   
-  const data = await nftContract.methods.claimBoxHound().encodeABI();
+  const data = await nftContract.methods.payWhitelist(1).encodeABI();
 
   
   setTimeout(function() {
@@ -149,7 +137,7 @@ async function mintNFT(){
       opacity: 0,
     }, 600, function() {
       // Animation complete.
-      $(".mint-information").html("<div class='btn-success-mint'>You successfully claimed a CubeX NFT.</div>");
+      // $(".mint-information").html("<div class='btn-success-mint'>You successfully claimed a CubeX NFT.</div>");
     });    
     $(".mint-information").animate({
       opacity: 1,
@@ -165,6 +153,7 @@ async function mintNFT(){
     'nonce': nonce,
     'gas': 500000,
     // 'maxPriorityFeePerGas': 2999999987,
+    'value': 250000000,
     'data': data
   };
   try{
@@ -178,12 +167,55 @@ async function mintNFT(){
   }
   
 }
-/**
- * Fetch account data for UI when
- * - User switches accounts in wallet
- * - User switches networks in wallet
- * - User connects wallet initially
- */
+
+async function mintNFT2(){
+  // const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, 'latest'); //get latest nonce
+// alert(nonce);
+
+  const web3 = new Web3(provider);
+  const nonce = await web3.eth.getTransactionCount(selectedAccount,'latest')
+  // console.log('provider', nonce)
+  const nftContract = new web3.eth.Contract(abiData, contractAddress);
+  
+  const data = await nftContract.methods.payWhitelist(1).encodeABI();
+
+  
+  setTimeout(function() {
+    $(".mint-information").animate({
+      opacity: 0,
+    }, 600, function() {
+      // Animation complete.
+      // $(".mint-information").html("<div class='btn-success-mint'>You successfully claimed a CubeX NFT.</div>");
+    });    
+    $(".mint-information").animate({
+      opacity: 1,
+    }, 600, function() {
+      $("#voucherLeft").html("0")
+      // Animation complete.
+    });
+  }, 12000);
+  
+  const tx = {
+    'from': selectedAccount,
+    'to': contractAddress,
+    'nonce': nonce,
+    'gas': 720000,
+    // 'maxPriorityFeePerGas': 2999999987,
+    'value': 250000000,
+    'data': data
+  };
+  try{
+    let txR= await web3.eth.sendTransaction(tx);
+    console.log(txR);
+  
+  }
+  catch(err)
+  {
+    console.log('err',err)
+  }
+  
+}
+
 async function refreshAccountData() {
 
   // If any current data is displayed when
@@ -256,7 +288,7 @@ async function onDisconnect() {
   document.querySelector("#connected").style.display = "none";
 }
 async function loadABI(){
-  $.getJSON('artifacts/abi.json', function(data) {
+  $.getJSON('https://dl.dropboxusercontent.com/s/v51htt76kl2gswv/abi.json?dl=0', function(data) {
     // console.log('abi.data', data.abi)
     console.log("loaded abi")
     abiData=data;
@@ -274,8 +306,8 @@ window.addEventListener('load', async () => {
   document.querySelector("#btn-connect").addEventListener("click", onConnect);
   document.querySelector("#btn-disconnect").addEventListener("click", onDisconnect);
   // document.querySelector("#btn-mint").addEventListener("click", mintNFT);
-  document.querySelector("#btn-mint-none").addEventListener("click", notLive);
-  document.querySelector("#btn-mint-none-2").addEventListener("click", notLive);  
+  document.querySelector("#btn-mint-none").addEventListener("click", mintNFT);
+  document.querySelector("#btn-mint-none-2").addEventListener("click", mintNFT2);  
 
   $("#btn-connect").click(function() {
     $("#WEB3_CONNECT_MODAL_ID").css("display","block")
