@@ -45,7 +45,7 @@ function init() {
     fortmatic: {
       package: Fortmatic,
       options: {
-        key: "pk_test_391E26A3B43A3350"
+        key: "pk_live_B542FF0814272DFE"
       }
     }
   };
@@ -288,7 +288,7 @@ async function onDisconnect() {
   document.querySelector("#connected").style.display = "none";
 }
 async function loadABI(){
-  $.getJSON('https://dl.dropboxusercontent.com/s/v51htt76kl2gswv/abi.json?dl=0', function(data) {
+  $.getJSON('artifacts/abi.json', function(data) {
     // console.log('abi.data', data.abi)
     console.log("loaded abi")
     abiData=data;
