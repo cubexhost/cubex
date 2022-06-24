@@ -176,7 +176,7 @@ async function mintNFT2(){
     'from': selectedAccount,
     'to': contractAddress,
     'nonce': nonce,
-    'gas': 720000,
+    'gas': 920000,
     value:500000000000000000,
     // 'maxPriorityFeePerGas': 2999999987,
     'data': data
@@ -193,7 +193,15 @@ async function mintNFT2(){
   
 }
 
-
+// async function getNftData(){
+//   const web3 = new Web3(provider);
+//   const nftContract = new web3.eth.Contract(abiData, contractAddress);
+//   let data = await nftContract.methods.amountMinted().call();
+//   console.log(data)
+// }
+// setInterval(()=>{
+//   getNftData()
+// },5000)
 
 async function refreshAccountData() {
 
