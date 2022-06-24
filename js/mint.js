@@ -116,7 +116,7 @@ async function fetchAccountData() {
 }
 
 async function notLive() {
-  $(".mint-information").html("<div class='btn-not-live'>Mint is not yet live.</div>");  
+  $(".mint-information").html("<div class='btn-not-live'>Mint is currently paused.</div>");  
 }
 
 async function mintNFT(){
@@ -310,8 +310,8 @@ window.addEventListener('load', async () => {
   document.querySelector("#btn-connect").addEventListener("click", onConnect);
   document.querySelector("#btn-disconnect").addEventListener("click", onDisconnect);
   // document.querySelector("#btn-mint").addEventListener("click", mintNFT);
-  document.querySelector("#btn-mint-none").addEventListener("click", mintNFT);
-  document.querySelector("#btn-mint-none-2").addEventListener("click", mintNFT2);  
+  document.querySelector("#btn-mint-none").addEventListener("click", notLive);
+  document.querySelector("#btn-mint-none-2").addEventListener("click", notLive);  
 
   $("#btn-connect").click(function() {
     $("#WEB3_CONNECT_MODAL_ID").css("display","block")
